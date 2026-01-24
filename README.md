@@ -4,8 +4,6 @@ CRISTAR aims to investigate laser-induced crystallization under both microgravit
 
 #
 
-Canadian Reduced Gravity Experiment Design Challenge
-
 Team Members:
 - Alexander Wainwright
 - Khaled Madhoun
@@ -16,5 +14,30 @@ Team Members:
 - Daniel Yu
 - Natalie Djuric
 
+[Canadian Reduced Gravity Experiment Design Challenge | 2025-2026 Teams](https://www.seds.ca/can-rgx/#current)
+
 #
 <br>
+
+<p align="center">
+  <img src="readme_assets/cristar_logo.png" alt="CRISTAR Logo" width="40%" /></a>
+  &nbsp;&nbsp;&nbsp;&nbsp;
+  <img src="readme_assets/can-rgx_9_mission_patch.png" alt="CAN-RGX 9 Mission Patch" width="40%" /></a>
+</p>
+
+<br>
+
+<div align="center">
+    <a href="https://www.seds.ca/can-rgx/">
+        <img src="readme_assets/can-rgx_logo.png" alt="CAN-RGX Logo" style="height:125px; width:auto;">
+    </a>
+</div>
+
+<br>
+
+<div align="center">
+    <a href="https://www.utoronto.ca/">
+        <img src="readme_assets/uoft_logo.png" alt="University of Toronto Logo" style="height:250px; width:auto;">
+    </a>
+</div>
+
