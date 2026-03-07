@@ -2,7 +2,7 @@ import time
 import board
 import busio
 
-import adafruit_bme280
+from adafruit_bme280.basic import Adafruit_BME280_I2C
 
 from adafruit_bno08x import (
     BNO_REPORT_ACCELEROMETER,
@@ -18,7 +18,7 @@ def init_i2c():
 
 
 def init_bme280(i2c):
-    bme280 = adafruit_bme280.Adafruit_BME280_I2C(i2c, address=0x76)
+    bme280 = Adafruit_BME280_I2C(i2c, address=0x77)
     bme280.sea_level_pressure = 1013.25
     return bme280
 
@@ -76,11 +76,11 @@ def main():
 
             print("\n-----------------------------\n")
 
-            time.sleep(2)
+            # time.sleep(2)
 
         except Exception as e:
             print("Error:", e)
-            time.sleep(2)
+            # time.sleep(2)
 
 
 if __name__ == "__main__":

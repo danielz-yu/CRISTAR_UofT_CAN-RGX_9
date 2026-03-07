@@ -6,7 +6,17 @@ import threading
 import time
 import csv
 import os
+import math
 from datetime import datetime
+
+try:
+    from sensors import init_i2c, init_bme280, init_bno085
+    SENSORS_IMPORT_ERROR = None
+except Exception as e:
+    init_i2c = None
+    init_bme280 = None
+    init_bno085 = None
+    SENSORS_IMPORT_ERROR = e
 
 class LabControlSystem:
     def __init__(self, root):
@@ -21,6 +31,12 @@ class LabControlSystem:
         self.accel_val = tk.DoubleVar(value=0.00)
         self.temp_val = tk.DoubleVar(value=0.00)
         self.humid_val = tk.DoubleVar(value=0.00)
+
+        # Sensor state
+        self.i2c = None
+        self.bme280 = None
+        self.bno = None
+        self.sensor_error_logged = False
         
         # New variables for File Saving
         self.save_to_file = tk.BooleanVar(value=False)
@@ -33,8 +49,14 @@ class LabControlSystem:
         self.cap = cv2.VideoCapture(0)
         self.update_camera()
 
-        # --- Sensor Simulation ---
+        # --- Sensor Setup ---
+        self.init_sensors()
+
+        # --- Sensor Refresh ---
         self.update_sensors()
+
+        # Ensure hardware resources are released on close
+        self.root.protocol("WM_DELETE_WINDOW", self.on_close)
 
     def setup_ui(self):
         # Left Panel: Camera Feed (Fixed side to match your provided code)
@@ -103,9 +125,55 @@ class LabControlSystem:
             self.cam_label.configure(image=imgtk)
         self.root.after(10, self.update_camera)
 
+    def init_sensors(self):
+        if SENSORS_IMPORT_ERROR is not None:
+            print(f"Sensor module unavailable: {SENSORS_IMPORT_ERROR}")
+            return
+
+        try:
+            self.i2c = init_i2c()
+            self.bme280 = init_bme280(self.i2c)
+            self.bno = init_bno085(self.i2c)
+            print("Sensors initialized successfully")
+        except Exception as e:
+            print(f"Sensor init failed: {e}")
+            self.i2c = None
+            self.bme280 = None
+            self.bno = None
+
     def update_sensors(self):
-        # Simulation placeholder
+        if self.bme280 is not None and self.bno is not None:
+            try:
+                temperature = self.bme280.temperature
+                humidity = self.bme280.relative_humidity
+                accel_x, accel_y, accel_z = self.bno.acceleration
+
+                accel_magnitude_g = (
+                    math.sqrt(accel_x ** 2 + accel_y ** 2 + accel_z ** 2) / 9.80665
+                )
+
+                self.temp_val.set(round(temperature, 2))
+                self.humid_val.set(round(humidity, 2))
+                self.accel_val.set(round(accel_magnitude_g, 3))
+                self.sensor_error_logged = False
+            except Exception as e:
+                if not self.sensor_error_logged:
+                    print(f"Sensor read failed: {e}")
+                    self.sensor_error_logged = True
+
         self.root.after(500, self.update_sensors)
+
+    def on_close(self):
+        if self.cap and self.cap.isOpened():
+            self.cap.release()
+
+        if self.i2c is not None:
+            try:
+                self.i2c.deinit()
+            except Exception:
+                pass
+
+        self.root.destroy()
 
     def move_platform(self):
         print(f"Moving platform to Sample {self.current_sample.get()} position...")
