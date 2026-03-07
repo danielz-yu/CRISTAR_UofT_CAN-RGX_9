@@ -18,12 +18,12 @@ CRISTAR aims to investigate laser-induced crystallization under both microgravit
 
 #
 
-## Setup and Run
+### Setup and Run
 
-Main GUI entrypoint: `cristar_gui.py`  
+Main GUI script: `cristar_gui.py`  
 Required dependencies: `requirements.txt`
 
-### 1. Local setup
+### 1. Local Setup
 
 ```bash
 python3 -m venv .venv
@@ -32,52 +32,49 @@ pip install --upgrade pip
 pip install -r requirements.txt
 ```
 
-### 2. Run the main GUI
+### 2. Running the Main GUI
 
+Aliases set up on the Raspberry Pi
 ```bash
-python3 cristar_gui.py
+prep
+gui
 ```
 
-### 3. Testing scripts
+If these aliases are unavailable in a non-interactive shell, run the script directly:
+```bash
+/home/cristar/Desktop/CRISTAR_UofT_CAN-RGX_9/.venv/bin/python /home/cristar/Desktop/CRISTAR_UofT_CAN-RGX_9/cristar_gui.py
+```
+
+### 3. Testing Scripts
 
 The `testing/` folder contains helper/testing scripts.
-
 ```bash
 python3 testing/sensors.py
 python3 testing/test_x11.py
 ```
 
-### 4. Raspberry Pi quick access
+### 4. Raspberry Pi Quick Access
 
-Pi hostname/user: `cristar@cristar.local`  
-Alias available on the Pi setup: `gui` (runs the main GUI)
-
+- Pi hostname/user: `cristar@cristar.local`
+- Pi password: `cristar2026`
+- Alias available on the Pi setup: `gui` (runs the main GUI)
 ```bash
 ssh cristar@cristar.local
 gui
 ```
 
-### 5. Optional remote GUI from a second computer (SSH + Ethernet/Wi-Fi + X11)
+### 5. Remote GUI from a Second Computer (SSH + Ethernet/Wi-Fi + X11)
 
 If running the GUI remotely from another computer (for example over Ethernet), install XQuartz and launch with X11 forwarding:
-
 ```bash
-open -a XQuartz; export DISPLAY=:0; ssh -Y -o ForwardX11=yes -o ForwardX11Trusted=yes cristar@cristar.local
-```
-
-Then run:
-
-```bash
+open -a XQuartz
+export DISPLAY=:0
+ssh -Y -o ForwardX11=yes -o ForwardX11Trusted=yes cristar@cristar.local
 gui
 ```
 
-If the `gui` alias is unavailable in a non-interactive shell, run the script directly:
-
-```bash
-python3 cristar_gui.py
-```
-
 #
+
 <br>
 
 <p align="center">
