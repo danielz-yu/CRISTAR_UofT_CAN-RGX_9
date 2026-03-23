@@ -8,7 +8,7 @@ CRISTAR aims to investigate laser-induced crystallization under both microgravit
 - Alexander Wainwright
 - Khaled Madhoun
 - Elias Barsa
-- Gabriel Caribe
+- Gabriel Caribé
 - Syeda Mahdia
 - Lauren Altomare
 - Daniel Yu
