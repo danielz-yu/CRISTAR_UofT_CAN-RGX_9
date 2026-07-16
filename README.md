@@ -38,12 +38,13 @@ Aliases set up on the Raspberry Pi
 ```bash
 connections
 gui
+connections
 start
 ```
 
 If these aliases are unavailable in a non-interactive shell, run the script directly:
 ```bash
-/home/cristar/Desktop/CRISTAR_UofT_CAN-RGX_9/.venv/bin/python /home/cristar/Desktop/CRISTAR_UofT_CAN-RGX_9/cristar_gui.py
+/home/cristar/Documents/GUI_Development.venv/bin/python /home/cristar/Documents/GUI_Development/cristar_gui.py
 ```
 
 ### 3. Testing Scripts
